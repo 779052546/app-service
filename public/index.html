@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/javascripts/angular.min.js"></script>
+    <script src="/javascripts/angular-route.min.js"></script>
+</head>
+<body ng-app="myApp">
+    <ul>
+        <li><a href="#!/">查看商品</a></li>
+        <li><a href="#!/add">添加商品</a></li>
+        <li><a href="#!/orders">查看订单</a></li>
+        <li><a href="#!/user">查看用户</a></li>
+    </ul>
+    <br>
+    <hr>
+    <div ng-view>
+
+    </div>
+
+    <script>
+        var app = angular.module('myApp',['ngRoute']);
+        app.config(function($routeProvider){
+            $routeProvider
+                .when('/',{
+                     templateUrl:'./views/views.html',
+                     controller:'viewsCtrl'
+                 }).when('/add',{
+                     templateUrl:'./add/add.html',
+                     controller:'addCtrl'
+                 }).when('/orders',{
+                     templateUrl:'./orders/orders.html',
+                     controller:'ordersCtrl'
+                 }).when('/user',{
+                     templateUrl:'./user/user.html',
+                     controller:'userCtrl'
+            })
+        })
+        app.controller('viewsCtrl',function($scope){
+
+        })
+
+        app.controller('addCtrl',function($scope,$http){
+            $scope.arr = [];
+            $scope.add = function(p){
+                $scope.arr.push(p);
+                console.log(p.name)
+
+            }
+        })
+
+        app.controller('ordersCtrl',function($scope){
+
+        })
+
+        app.controller('userCtrl',function($scope){
+
+        })
+    </script>
+</body>
+</html>
