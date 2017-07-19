@@ -57,8 +57,59 @@
             });
         }])
 
-        app.controller('userCtrl',['$scope',function($scope){
+        app.controller('userCtrl',['$scope','$http',function($scope,$http){
+           $scope.all = 300000;
+           $scope.online =50000;
 
+           $scope.isShow = false;
+
+           $http.get('/users').then(function(res){
+               //console.log(res.data.data);
+               $scope.users = res.data.data;
+           },
+           function(err) {
+            alert('获取失败');
+           });
+
+           var arr = [];
+           $scope.showDetail = function(ua){
+               arr = ua;
+               console.log(ua);
+               $scope.u = ua;
+               $scope.isShow = true;
+               $scope.isUpdate = true;
+           };
+
+           $scope.onSubmit = function(){
+//                  console.log($scope.u);
+                   $http.put('/users',$scope.u)
+                       .then(function (res) {
+                           var result = res.data;
+                           if(result.success){
+                            $scope.isShow = false;
+                            alert('更新成功');
+                           }else{
+                            alert('更新失败');
+                           }
+                       })
+           };
+
+           // 取消操作
+            $scope.back = function (u) {
+                $scope.u = arr;
+                $scope.isShow = false;
+            };
+           //删除操作
+           $scope.remove = function(u){
+               $http.delete('/users/'+u.id)
+                   .then(function(res){
+                       var result = res.data;
+                       if(result.success){
+                           var i = $scope.users.indexOf(u);
+                           $scope.users.splice(i,1);
+                       }
+                   })
+           };
         }])
     </script>
 </body>
