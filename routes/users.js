@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var conn = require('../mysql/db').getConn();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', function(req, res) {
+
 });
 
 module.exports = router;

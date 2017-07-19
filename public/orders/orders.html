@@ -4,7 +4,35 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    td{
+        width: 400px;
+        border:1px solid black;
+        text-align: center;
+    }
+    tr:nth-of-type(2n){
+        background-color: #ccc;
+    }
+</style>
 <body>
-
+    <h1 style="text-align: center">查看订单</h1>
+    <table>
+        <tr>
+            <td>序号</td>
+            <td>游玩目的地</td>
+            <td>票价id</td>
+            <td>游玩时间</td>
+            <td>订票数量</td>
+            <td>用户姓名</td>
+        </tr>
+       <tr ng-repeat="k in orders" >
+            <td>{{k.id}}</td>
+            <td>{{k.vname}}</td>
+            <td>{{k.tname}}</td>
+            <td>{{k.time}}</td>
+            <td>{{k.amount}}</td>
+            <td>{{k.name}}</td>
+       </tr>
+    </table>
 </body>
 </html>

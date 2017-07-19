@@ -38,25 +38,28 @@
                      controller:'userCtrl'
             })
         })
-        app.controller('viewsCtrl',function($scope){
+        app.controller('viewsCtrl',['$scope',function($scope){
 
-        })
+        }])
 
-        app.controller('addCtrl',function($scope,$http){
+        app.controller('addCtrl',['$scope','$http',function($scope,$http){
             $scope.arr = [];
             $scope.add = function(p){
                 $scope.arr.push(p);
-                $http.get()
             }
-        })
+        }])
 
-        app.controller('ordersCtrl',function($scope){
+        app.controller('ordersCtrl',['$scope','$http',function($scope,$http){
+            $http.get('http://localhost:3000/orders').then(function(res){
+                $scope.orders = res.data;
+            },function(err){
 
-        })
+            });
+        }])
 
-        app.controller('userCtrl',function($scope){
+        app.controller('userCtrl',['$scope',function($scope){
 
-        })
+        }])
     </script>
 </body>
 </html>
