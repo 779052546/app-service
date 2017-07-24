@@ -7,6 +7,9 @@
     <script src="/javascripts/angular.min.js"></script>
     <script src="/javascripts/angular-route.min.js"></script>
 </head>
+<style>
+
+</style>
 <body ng-app="myApp">
     <ul>
         <li><a href="#!/">查看商品</a></li>
@@ -38,8 +41,66 @@
                      controller:'userCtrl'
             })
         })
-        app.controller('viewsCtrl',['$scope',function($scope){
+        app.controller('viewsCtrl',['$scope','$http',function($scope,$http){
+            $scope.pageNum = 1;
+            $scope.jieguo;
+            $scope.show=function(){
+                $http.get('http://localhost:3000/shuju',{params:{pageNum:$scope.pageNum}}).then(function(res){
+                    $scope.jieguo = res.data.data.jieguo;
+                    $scope.total = res.data.data.total;
 
+                    if($scope.pageNum == 1){
+                        $scope.isShow = true;
+                    }else{
+                        $scope.isShow = false;
+                    }
+
+                    if($scope.pageNum == Math.ceil($scope.total/3)){
+                        $scope.isShow1 = true;
+                    }else{
+                        $scope.isShow1 = false;
+                    }
+                });
+            }
+            $scope.show();
+            $scope.prev = function(){
+                $scope.pageNum --;
+                $scope.show();
+            }
+            $scope.next = function(){
+                $scope.pageNum ++;
+                $scope.show();
+            }
+
+            $scope.del=function(s){
+                $http.delete('http://localhost:3000/shuju/'+s.id).then(function(res){
+                    var result = res.data;
+                    if (result.success){
+                        var i = $scope.jieguo.indexOf(s);
+                        $scope.jieguo.splice(i,1);
+                    }
+                })
+            }
+            $scope.zhanshi = false;
+            $scope.change = function(s){
+                $scope.s = s;
+                $scope.zhanshi = true;
+            }
+            $scope.put = function(s){
+                $http.put('http://localhost:3000/shuju',$scope.s).then(function(res){
+                    var result = res.data;
+                    if (result.success){
+                        alert('更新成功')
+                        $scope.zhanshi = false;
+                    }else{
+                        alert(result.data);
+                    }
+                })
+            }
+            $scope.notsure = function(){
+                $scope.s = '';
+                $scope.zhanshi = false;
+            }
         }])
 
         app.controller('addCtrl',['$scope','$http',function($scope,$http){
@@ -58,14 +119,13 @@
         }])
 
         app.controller('userCtrl',['$scope','$http',function($scope,$http){
-           $scope.all = 300000;
-           $scope.online =50000;
 
            $scope.isShow = false;
 
            $http.get('/users').then(function(res){
                //console.log(res.data.data);
                $scope.users = res.data.data;
+                   $scope.all = res.data.total;
            },
            function(err) {
             alert('获取失败');

@@ -4,7 +4,41 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    td{
+        width: 200px;
+        text-align: center;
+    }
+    .suojin{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp:2;
+        -webkit-box-orient:vertical;
+    }
+</style>
 <body>
-
+    <table>
+        <tr>
+            <td>名称</td>
+            <td>商家入驻</td>
+            <td>描述</td>
+            <td>操作</td>
+        </tr>
+        <tr ng-repeat="k in jieguo">
+            <td>{{k.name}}</td>
+            <td>{{k.identification}}</td>
+            <td class="suojin">{{k.desc}}</td>
+            <td><button ng-click="change(k)">修改</button><button ng-click="del(k)">删除</button></td>
+        </tr>
+        <tr ng-show="zhanshi">
+            <td><input type="text" ng-model="s.name"></td>
+            <td><input type="text" ng-model="s.identification"></td>
+            <td><textarea ng-model="s.desc"></textarea></td>
+            <td><button ng-click="put(s)">确定</button><button ng-click="notsure()">取消</button></td>
+        </tr>
+    </table>
+    <button ng-click="prev()" ng-disabled="isShow">上一页</button>
+    <button ng-click="next()" ng-disabled="isShow1">下一页</button>
 </body>
 </html>

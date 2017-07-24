@@ -17,6 +17,7 @@ module.exports = {
             if(!err){
                 console.log('连接数据库成功');
             }
+
         });
         return conn;
     }

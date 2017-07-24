@@ -13,15 +13,12 @@ router.get('/',(req, res)=>{
                 data: '用户信息查询失败'
             })
         }
-        if (results.length > 0) {
+        conn.query('SELECT COUNT(*) AS num_count FROM users',function(err,result){
             return res.send({
                 success: true,
-                data: results
+                data: results,
+                total:result[0].num_count
             })
-        }
-        res.send({
-            success: false,
-            data: '用户信息查询失败'
         })
     })
 });

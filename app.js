@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var orders = require('./routes/orders');
 var upload = require('./routes/upload');
 var duqutupian = require('./routes/duqutupian');
+var shuju = require('./routes/shuju');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/users', users);
 app.use('/orders', orders);
 app.use('/upload', upload);
 app.use('/dqtp', duqutupian);
+app.use('/shuju', shuju);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
