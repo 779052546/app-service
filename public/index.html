@@ -104,9 +104,60 @@
         }])
 
         app.controller('addCtrl',['$scope','$http',function($scope,$http){
-            $scope.arr = [];
-            $scope.add = function(p){
-                $scope.arr.push(p);
+            $scope.ViewArr = [];
+            $scope.TypeArr = [];
+
+            $scope.changeV = function (data) {
+                $scope.ViewArr.push(data);
+            }
+            $scope.add = function(p,f){
+                $scope.ViewArr.push(p);
+                $scope.TypeArr.push(f);
+                $scope.p = null;
+            }
+            $scope.tableArr = [];
+            var bool = 0;
+            $scope.addMember = function () {
+                $scope.visible = true;
+                bool = 0;
+            }
+            $scope.updateMember = function (h) {
+                bool = 1;
+                $scope.visible = true;
+                $scope.h = $scope.tableArr[h];
+            }
+            $scope.addMemberY = function (h) {
+                if (bool == 0){
+                    $scope.tableArr.push(h);
+                    $scope.h = null;
+                    $scope.visible = false;
+                }
+                if (bool ==1){
+                    $scope.h = null;
+                    $scope.visible = false;
+                }
+            }
+            $scope.addMemberN = function (h) {
+                $scope.h = null;
+                $scope.visible = false;
+            }
+            $scope.deleteMember = function (h) {
+                $scope.tableArr.splice(h,1);
+                $scope.visible = false;
+            }
+
+            $scope.add=function () {
+                $http.post('http://localhost:3000/index/viewspots',$scope.p).then(function (res) {
+                    console.log(res.data.viewid)
+                    $scope.viewid = res.data.viewid;
+                    $http.post('http://localhost:3000/index/ticket',$scope.tableArr).then(function (res) {
+
+                    });
+                });
+                $http.post('http://localhost:3000/index/status',$scope.f).then(function (res) {
+
+                });
+
             }
         }])
 
