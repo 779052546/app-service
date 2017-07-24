@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 var conn = require('../mysql/db').getConn();
 
-/* GET users listing. */
+// 左联查询 根据下单表中的userid与用户表中的id值相同 ,其次 其表tid中与票价ticket表中的id值 ,最后 viewid与表viewspots中的id
 router.get('/', function(req, res) {
     var sql = `SELECT o.id,o.viewid,o.tid,o.time,o.amount,u.name,t.name tname,v.name vname FROM orders o 
     LEFT JOIN users u on o.usersid = u.id

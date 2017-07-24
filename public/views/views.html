@@ -25,12 +25,14 @@
             <td>描述</td>
             <td>操作</td>
         </tr>
+        <!--展示,然后添加删除和修改按钮-->
         <tr ng-repeat="k in jieguo">
             <td>{{k.name}}</td>
             <td>{{k.identification}}</td>
             <td class="suojin">{{k.desc}}</td>
             <td><button ng-click="change(k)">修改</button><button ng-click="del(k)">删除</button></td>
         </tr>
+        <!--用于修改-->
         <tr ng-show="zhanshi">
             <td><input type="text" ng-model="s.name"></td>
             <td><input type="text" ng-model="s.identification"></td>

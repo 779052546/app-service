@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 var conn = require('../mysql/db').getConn();
 
-/* GET home page. */
+/* 分页查询 ,每页显示3条数据,接收出来的参数 pageNum */
 router.get('/', function(req, res) {
     console.log(req.query.pageNum);
     var size = 3;
@@ -23,6 +23,7 @@ router.get('/', function(req, res) {
     })
 });
 
+//删除  根据id删除
 router.delete('/:id',function(req,res){
     var sql = `DELETE FROM viewspots WHERE id = ?`;
     conn.query(sql,[req.params.id],function(err,results){
@@ -32,6 +33,7 @@ router.delete('/:id',function(req,res){
     })
 });
 
+//更新数据
 router.put('/',function(req,res){
     var sql = `update viewspots set ? where id = ?`;
     conn.query(sql,[req.body,req.body.id],function(err,result){
