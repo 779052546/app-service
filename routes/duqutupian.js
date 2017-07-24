@@ -13,19 +13,21 @@ router.get('/', function(req, res) {
         }
     })
 });
-router.get('/hot',function(req,res){
-    conn.query(`select * from tuijian`,function(err,results){
+router.get('/hot/:pageNum',function(req,res){
+    var size = req.params.pageNum * 1;
+    conn.query(`select * from tuijian limit ?`,[size],function(err,results){
         if (!err){
             res.send({data:results});
         }
     })
 });
+var sql = `select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewspots v  
+    LEFT JOIN viewtype t on t.id = v.viewtypeid
+    LEFT JOIN ticket k on k.id = v.id
+    where v.viewtypeid =`;
 
 router.get('/hotimg',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewtype t  
-    LEFT JOIN viewspots v on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where t.id = 1`,function(err,results){
+    conn.query(sql + 1,function(err,results){
         if(!err){
             res.send({data:results});
         }
@@ -33,10 +35,7 @@ router.get('/hotimg',function(req,res){
 });
 
 router.get('/plimg',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewtype t  
-    LEFT JOIN viewspots v on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where t.id = 6`,function(err,results){
+    conn.query(sql+6,function(err,results){
         if(!err){
             res.send({data:results});
         }
@@ -44,10 +43,7 @@ router.get('/plimg',function(req,res){
 });
 
 router.get('/ydhwimg',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewtype t  
-    LEFT JOIN viewspots v on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where t.id = 2`,function(err,results){
+    conn.query(sql+2,function(err,results){
         if(!err){
             res.send({data:results});
         }
@@ -55,10 +51,7 @@ router.get('/ydhwimg',function(req,res){
 });
 
 router.get('/sljzimg',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewtype t  
-    LEFT JOIN viewspots v on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where t.id = 7`,function(err,results){
+    conn.query(sql+7,function(err,results){
         if(!err){
             res.send({data:results});
         }
@@ -66,10 +59,7 @@ router.get('/sljzimg',function(req,res){
 });
 
 router.get('/ycssimg',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewtype t  
-    LEFT JOIN viewspots v on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where t.id = 4`,function(err,results){
+    conn.query(sql+4,function(err,results){
         if(!err){
             res.send({data:results});
         }
@@ -77,10 +67,7 @@ router.get('/ycssimg',function(req,res){
 });
 
 router.get('/zlimg',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewtype t  
-    LEFT JOIN viewspots v on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where t.id = 5`,function(err,results){
+    conn.query(sql+5,function(err,results){
         if(!err){
             res.send({data:results});
         }
@@ -88,10 +75,7 @@ router.get('/zlimg',function(req,res){
 });
 
 router.get('/jdimg',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewtype t  
-    LEFT JOIN viewspots v on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where t.id = 3`,function(err,results){
+    conn.query(sql+3,function(err,results){
         if(!err){
             res.send({data:results});
         }
