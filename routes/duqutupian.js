@@ -21,10 +21,13 @@ router.get('/hot/:pageNum',function(req,res){
         }
     })
 });
-var sql = `select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewspots v  
-    LEFT JOIN viewtype t on t.id = v.viewtypeid
-    LEFT JOIN ticket k on k.id = v.id
-    where v.viewtypeid =`;
+// var sql = `select v.name,v.img,v.desc,k.name cname,k.price,v.identification i,v.date,v.id from viewspots v
+//     LEFT JOIN viewtype t on t.id = v.viewtypeid
+//     LEFT JOIN ticket k on k.viewid = v.id
+//     where v.viewtypeid = `;
+var sql = `select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
+    LEFT JOIN viewtype t on t.id = v.viewtypeid 
+    where v.viewtypeid = `
 
 router.get('/hotimg',function(req,res){
     conn.query(sql + 1,function(err,results){
@@ -87,6 +90,35 @@ router.get('/search',function(req,res){
     LEFT JOIN ticket k on k.id = v.id`,function(err,results){
         if(!err){
             res.send({data:results});
+        }
+    })
+});
+
+
+router.get('/searchId/:id',function(req,res){
+    //console.log(req.params.id);
+    conn.query(`select * from ticket where viewid = ?`,[req.params.id],function(err,result){
+        if(!err){
+            res.send({data:result});
+        }
+    })
+})
+
+router.get('/minprice/:id',function(req,res){
+    conn.query(`SELECT v.name,v.img,v.desc,v.identification i,v.date,v.id,MIN(k.price) minprice,MAX(k.price) maxprice FROM  ticket k  
+    LEFT JOIN viewspots v ON v.id = k.viewid 
+    WHERE k.viewid = ?`,[req.params.id],function(err,result){
+        if(!err){
+            res.send({data:result});
+        }
+    })
+})
+
+router.get('/statusId/:id',function(req,res){
+    console.log(req.params.id);
+    conn.query(`select * from status where id = ?`,[req.params.id],function(err,result){
+        if(!err){
+            res.send({data:result});
         }
     })
 })

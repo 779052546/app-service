@@ -151,7 +151,12 @@
                     console.log(res.data.viewid)
                     $scope.viewid = res.data.viewid;
                     $http.post('http://localhost:3000/index/ticket',$scope.tableArr).then(function (res) {
-
+                        if(res.success){
+                            alert('添加成功');
+                            $scope.p='';
+                            $scope.tableArr='';
+                            $scope.f = '';
+                        }
                     });
                 });
                 $http.post('http://localhost:3000/index/status',$scope.f).then(function (res) {
