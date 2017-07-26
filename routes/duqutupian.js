@@ -9,7 +9,7 @@ var conn = require('../mysql/db').getConn();
 router.get('/', function(req, res) {
     conn.query(`select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
     LEFT JOIN viewtype t on t.id = v.viewtypeid 
-    where v.viewtypeid = 3`,function(err,results){
+    where v.viewtypeid = 3 limit 7,7`,function(err,results){
         if (!err){
             res.send({data:results});
         }
