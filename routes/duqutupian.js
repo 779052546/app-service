@@ -7,24 +7,35 @@ var conn = require('../mysql/db').getConn();
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-    conn.query(`select * from images`,function(err,results){
+    conn.query(`select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
+    LEFT JOIN viewtype t on t.id = v.viewtypeid 
+    where v.viewtypeid = 3`,function(err,results){
         if (!err){
             res.send({data:results});
         }
     })
 });
-router.get('/hot/:pageNum',function(req,res){
-    var size = req.params.pageNum * 1;
-    conn.query(`select * from tuijian limit ?`,[size],function(err,results){
+router.get('/hot',function(req,res){
+    var size = 10;
+    console.log(size);
+    conn.query( `select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
+    LEFT JOIN viewtype t on t.id = v.viewtypeid 
+    where v.viewtypeid = 1`,[size],function(err,results){
         if (!err){
             res.send({data:results});
         }
     })
 });
-// var sql = `select v.name,v.img,v.desc,k.name cname,k.price,v.identification i,v.date,v.id from viewspots v
-//     LEFT JOIN viewtype t on t.id = v.viewtypeid
-//     LEFT JOIN ticket k on k.viewid = v.id
-//     where v.viewtypeid = `;
+// router.get('/hot/:pageNum',function(req,res){
+//     var size = req.params.pageNum * 1;
+//     console.log(size);
+//     conn.query( `select * from tuijian limit ?`,[size],function(err,results){
+//         if (!err){
+//             res.send({data:results});
+//         }
+//     })
+// });
+
 var sql = `select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
     LEFT JOIN viewtype t on t.id = v.viewtypeid 
     where v.viewtypeid = `
@@ -123,4 +134,15 @@ router.get('/statusId/:id',function(req,res){
     })
 })
 
+
+router.post('/putcar',function(req,res){
+    console.log(req.body);
+    conn.query(`insert into carshop set ?`,[req.body],function(err,result){
+        if(err){
+            throw err;
+            return res.send({data:fasle})
+        }
+        return res.send({data:'success'})
+    })
+})
 module.exports = router;
