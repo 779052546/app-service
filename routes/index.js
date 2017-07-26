@@ -73,22 +73,44 @@ router.post('/ticket',function(req,res) {
     })
 });
 
+//前端购物车页面get请求处理
+router.get('/contactget',function (req,res) {
+    var sql = `SELECT viewspots.name,ticket.name tname,ticket.price,carshop.amount,carshop.id FROM viewspots 
+               LEFT JOIN carshop ON viewspots.id = carshop.viewspotsid
+               RIGHT JOIN ticket ON ticket.id = carshop.ticketid
+               WHERE carshop.usersid = 3`;
+    conn.query(sql,function (err,result) {
+        if (err){
+            return res.send({success:false,data:err.message});
+        }
+        return res.send({success:true,data:result});
+    })
+});
 
-// var sql4 = 'insert into ticket (name,detail,price,viewid) values' + (array1) + ')';
-// console.log(sql4);
-// conn.query(sql4,[req.body[0].name,req.body[0].detail,req.body[0].price,num],function (err,result) {
-//     if(err)
-//     {
-//         return res.send({success:false,data:err.message});
-//
-//     }
-//     if (result.affectedRows > 0)
-//     {
-//         return res.json({success:true});
-//     }
-//     return res.json({success:false,data:"插入失败!"});
-// });
+//前端购物车处理put请求
+router.put('/contactput',function (req,res) {
+    console.log(req.body);
+    var sql = `UPDATE carshop SET amount = ? WHERE id = ?`;
+    conn.query(sql,[req.body.amount,req.body.id],function (err,result) {
+        console.log(result);
+        if (err){
+            return res.send({success:false,data:err.message});
+        }
+        if (result.affectedRows > 0){
+            return res.json({success:true});
+        }
+    })
+})
 
-
-
+//前端购物车的delete请求处理
+router.delete('/contactdel/:id',function (req,res) {
+    console.log(req.params.id);
+    var sql = `delete from carshop where id = ?`;
+    conn.query(sql,[req.params.id],function (err,result) {
+        if (err){
+            return res.send({success:false,data:err.message});
+        }
+        res.send({success:true});
+    })
+})
 module.exports = router;

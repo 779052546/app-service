@@ -15,12 +15,13 @@ router.get('/', function(req, res) {
         }
     })
 });
+var sql = `select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
+    LEFT JOIN viewtype t on t.id = v.viewtypeid 
+    where v.viewtypeid = `
 router.get('/hot',function(req,res){
     var size = 10;
     console.log(size);
-    conn.query( `select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
-    LEFT JOIN viewtype t on t.id = v.viewtypeid 
-    where v.viewtypeid = 1`,[size],function(err,results){
+    conn.query( sql + 1,[size],function(err,results){
         if (!err){
             res.send({data:results});
         }
@@ -36,9 +37,6 @@ router.get('/hot',function(req,res){
 //     })
 // });
 
-var sql = `select v.name,v.img,v.desc,v.identification i,v.date,v.id from viewspots v  
-    LEFT JOIN viewtype t on t.id = v.viewtypeid 
-    where v.viewtypeid = `
 
 router.get('/hotimg',function(req,res){
     conn.query(sql + 1,function(err,results){
