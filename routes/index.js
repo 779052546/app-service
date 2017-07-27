@@ -75,7 +75,7 @@ router.post('/ticket',function(req,res) {
 
 //前端购物车页面get请求处理
 router.get('/contactget',function (req,res) {
-    var sql = `SELECT viewspots.name,ticket.name tname,ticket.price,carshop.amount,carshop.id FROM viewspots 
+    var sql = `SELECT viewspots.name,ticket.name tname,ticket.price,carshop.amount,carshop.id,viewspots.img FROM viewspots 
                LEFT JOIN carshop ON viewspots.id = carshop.viewspotsid
                RIGHT JOIN ticket ON ticket.id = carshop.ticketid
                WHERE carshop.usersid = 3`;
@@ -89,7 +89,7 @@ router.get('/contactget',function (req,res) {
 
 //前端购物车处理put请求
 router.put('/contactput',function (req,res) {
-    console.log(req.body);
+    //console.log(req.body);
     var sql = `UPDATE carshop SET amount = ? WHERE id = ?`;
     conn.query(sql,[req.body.amount,req.body.id],function (err,result) {
         console.log(result);
@@ -104,7 +104,7 @@ router.put('/contactput',function (req,res) {
 
 //前端购物车的delete请求处理
 router.delete('/contactdel/:id',function (req,res) {
-    console.log(req.params.id);
+    //console.log(req.params.id);
     var sql = `delete from carshop where id = ?`;
     conn.query(sql,[req.params.id],function (err,result) {
         if (err){

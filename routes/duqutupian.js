@@ -95,7 +95,7 @@ router.get('/jdimg',function(req,res){
 });
 
 router.get('/search',function(req,res){
-    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i from viewspots v  
+    conn.query(`select v.name,v.img,v.desc,k.name cname,k.price,v.identification i,v.id from viewspots v  
     LEFT JOIN ticket k on k.id = v.id`,function(err,results){
         if(!err){
             res.send({data:results});
