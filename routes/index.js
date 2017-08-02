@@ -75,10 +75,9 @@ router.post('/ticket',function(req,res) {
 
 //前端购物车页面get请求处理
 router.get('/contactget',function (req,res) {
-    var sql = `SELECT viewspots.name,ticket.name tname,ticket.price,carshop.amount,carshop.id,viewspots.img FROM viewspots 
-               LEFT JOIN carshop ON viewspots.id = carshop.viewspotsid
-               RIGHT JOIN ticket ON ticket.id = carshop.ticketid
-               WHERE carshop.usersid = 3`;
+    var sql = `SELECT viewspots.name,ticket.name tname,ticket.price,carshop.amount,carshop.id,viewspots.img FROM carshop 
+               LEFT JOIN viewspots ON viewspots.id = carshop.viewspotsid
+               LEFT JOIN ticket ON ticket.id = carshop.ticketid`;
     conn.query(sql,function (err,result) {
         if (err){
             return res.send({success:false,data:err.message});

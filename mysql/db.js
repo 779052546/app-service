@@ -3,7 +3,7 @@
  */
 var mysql = require('mysql');
 var config = {
-    host:'10.0.44.230',
+    host:'10.0.46.16',
     user:'张丙辛',
     password:'123456',
     database:'weekend-tour',
