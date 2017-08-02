@@ -45,7 +45,7 @@
             $scope.pageNum = 1;
             $scope.jieguo;
             $scope.show=function(){
-                $http.get('http://localhost:3000/shuju',{params:{pageNum:$scope.pageNum}}).then(function(res){
+                $http.get('http://59.110.165.55:1009/shuju',{params:{pageNum:$scope.pageNum}}).then(function(res){
                     $scope.jieguo = res.data.data.jieguo;
                     $scope.total = res.data.data.total;
 
@@ -73,7 +73,7 @@
             }
 
             $scope.del=function(s){
-                $http.delete('http://localhost:3000/shuju/'+s.id).then(function(res){
+                $http.delete('http://59.110.165.55:1009/shuju/'+s.id).then(function(res){
                     var result = res.data;
                     if (result.success){
                         var i = $scope.jieguo.indexOf(s);
@@ -87,7 +87,7 @@
                 $scope.zhanshi = true;
             }
             $scope.put = function(s){
-                $http.put('http://localhost:3000/shuju',$scope.s).then(function(res){
+                $http.put('http://59.110.165.55:1009/shuju',$scope.s).then(function(res){
                     var result = res.data;
                     if (result.success){
                         alert('更新成功')
@@ -147,10 +147,10 @@
             }
 
             $scope.add=function () {
-                $http.post('http://localhost:3000/index/viewspots',$scope.p).then(function (res) {
+                $http.post('http://59.110.165.55:1009/index/viewspots',$scope.p).then(function (res) {
                     console.log(res.data.viewid)
                     $scope.viewid = res.data.viewid;
-                    $http.post('http://localhost:3000/index/ticket',$scope.tableArr).then(function (res) {
+                    $http.post('http://59.110.165.55:1009/index/ticket',$scope.tableArr).then(function (res) {
                         if(res.success){
                             alert('添加成功');
                             $scope.p='';
@@ -159,7 +159,7 @@
                         }
                     });
                 });
-                $http.post('http://localhost:3000/index/status',$scope.f).then(function (res) {
+                $http.post('http://59.110.165.55:1009/index/status',$scope.f).then(function (res) {
 
                 });
 
@@ -167,7 +167,7 @@
         }])
 
         app.controller('ordersCtrl',['$scope','$http',function($scope,$http){
-            $http.get('http://localhost:3000/orders').then(function(res){
+            $http.get('http://59.110.165.55:1009/orders').then(function(res){
                 $scope.orders = res.data;
             },function(err){
 
